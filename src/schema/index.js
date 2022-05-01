@@ -1,6 +1,6 @@
 const schema = require('./schema.js');
-const query = require('./query.js');
-const mutation = require('./mutation.js');
+const query = require('./query.js').default;
+const mutation = require('./mutation.js').default;
 
 const resolvers = {
     ...query, ...mutation,

@@ -1,54 +1,70 @@
-let books = require('./data')
+import books from "../db"
 
 const mutation = {
-    addBook: async ({ title, author, description }, context) => {
-        const book = { id: `${books.length+1}`, title, author, description }
-        books.push(book)
-        return {
-            data: book,
-            ok: true,
-            error: ''
-        };
-    },
-
-    updateBook: async ({ id, title, author, description }, context) => {
-        const book = books.find(book => book.id === id);
-        if (!book) {
-            return {
-                data: null,
-                ok: false,
-                error: 'Book not found'
-            };
-        }
-
-        if (author) book.author = author
-        if (title) book.title = title
-        if (description) book.description = description
-        books = books.map(b => b.id === id ? book : b)
-        return {
-            data: book,
-            ok: true,
-            error: ''
-        };
-    },
-
-    deleteBook: async ({ id }, context) => {
-        const book = books.find(book => book.id === id)
-        if (!book) {
-            return {
-                data: null,
-                ok: false,
-                error: 'Book not found'
-            };
-        }
-
-        books = books.filter(book => book.id !== id)
-        return {
-            data: book,
-            ok: true,
-            error: ''
-        };
+  addBook: async ({ title, author, description }, context) => {
+    try {
+      const book = await books.createBook({ title, author, description })
+      return {
+        data: book,
+        ok: true,
+        error: "",
+      }
+    } catch (error) {
+      return {
+        data: null,
+        ok: false,
+        error: error.message,
+      }
     }
-};
+  },
 
-module.exports = mutation
+  updateBook: async ({ id, title, author, description }, context) => {
+    try {
+      const book = await books.updateBook(id, { title, author, description })
+      if (!book) {
+        return {
+          data: null,
+          ok: false,
+          error: "Book not found",
+        }
+      }
+      return {
+        data: book,
+        ok: true,
+        error: "",
+      }
+    } catch (error) {
+      return {
+        data: null,
+        ok: false,
+        error: error.message,
+      }
+    }
+  },
+
+  deleteBook: async ({ id }, context) => {
+    try {
+      const book = await books.deleteBook(id)
+      if (!book) {
+        return {
+          data: null,
+          ok: false,
+          error: "Book not found",
+        }
+      }
+      return {
+        data: book,
+        ok: true,
+        error: "",
+      }
+    } catch (error) {
+      return {
+        data: null,
+        ok: false,
+        error: error.message,
+      }
+    }
+  },
+}
+
+export default mutation
