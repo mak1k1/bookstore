@@ -1,13 +1,12 @@
-import books from '../db';
-
+const books = require("../db")
 
 const query = {
-    books: async ({limit}, context) => {
-        return await books.getAllBooks(limit)
-    },
-    book: async ({id}, context) => {
-        return booksData.find(book => book.id === id);
-    }
-};
+  books: async ({ limit }, context) => {
+    return await books.getAllBooks(limit)
+  },
+  book: async ({ id }, context) => {
+    return booksData.find((book) => book.id === id)
+  },
+}
 
-export default query;
+module.exports = { query }

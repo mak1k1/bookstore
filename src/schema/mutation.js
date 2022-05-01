@@ -1,4 +1,4 @@
-import books from "../db"
+const books = require("../db")
 
 const mutation = {
   addBook: async ({ title, author, description }, context) => {
@@ -67,4 +67,6 @@ const mutation = {
   },
 }
 
-export default mutation
+module.exports = {
+  mutation,
+}

@@ -1,5 +1,5 @@
-​​const mongoose = require('mongoose')
-const envs = require('../envs')
+const envs = require('../envs');
+const mongoose = require('mongoose');
 
 mongoose.connect(envs.dbUrl, {
     useNewUrlParser: true,
