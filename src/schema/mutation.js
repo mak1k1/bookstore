@@ -1,9 +1,9 @@
 const books = require("../db")
 
 const mutation = {
-  addBook: async ({ title, author, description }, context) => {
+  addBook: async ({ title, authors, description }, context) => {
     try {
-      const book = await books.createBook({ title, author, description })
+      const book = await books.createBook({ title, authors, description })
       return {
         data: book,
         ok: true,
@@ -18,7 +18,7 @@ const mutation = {
     }
   },
 
-  updateBook: async ({ id, title, author, description }, context) => {
+  updateBook: async ({ id, title, authors, description }, context) => {
     try {
       const book = await books.updateBook(id, { title, author, description })
       if (!book) {
@@ -54,6 +54,29 @@ const mutation = {
       }
       return {
         data: book,
+        ok: true,
+        error: "",
+      }
+    } catch (error) {
+      return {
+        data: null,
+        ok: false,
+        error: error.message,
+      }
+    }
+  },
+  addAuthor: async ({ name, description }, context) => {
+    try {
+      const author = await authors.addAuthor(name, description)
+      if(!author) {
+        return {
+          data: null,
+          ok: false,
+          error: "Author not found"
+        }
+      }
+      return {
+        data: author,
         ok: true,
         error: "",
       }
