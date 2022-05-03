@@ -1,7 +1,7 @@
 const books = require("../db")
 
 const mutation = {
-  addBook: async ({ title, authors, description }, context) => {
+  createBook: async ({ title, authors, description }, context) => {
     try {
       const book = await books.createBook({ title, authors, description })
       return {
@@ -20,7 +20,7 @@ const mutation = {
 
   updateBook: async ({ id, title, authors, description }, context) => {
     try {
-      const book = await books.updateBook(id, { title, author, description })
+      const book = await books.updateBook(id, { title, authors, description })
       if (!book) {
         return {
           data: null,
