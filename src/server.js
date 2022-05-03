@@ -22,7 +22,7 @@ app.use(
 
 app.listen(envs.port, () => {
   console.log(
-    `Server is running at http://localhost:${envs.port} ${envs.graphqlPath}`
+    `Server is running at http://localhost:${envs.port}${envs.graphqlPath}`
   )
 })
 

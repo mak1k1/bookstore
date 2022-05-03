@@ -8,7 +8,7 @@ const schema = buildSchema(`
         author(id: ID!): Author
     }
     type Mutation {
-        addBook(title: String!, authors: [ID]!, description: String!): BookResponse
+        addBook(title: String!, authors: [ID], description: String!): BookResponse
         updateBook(id: ID!, title: String, authors: [ID]!, description: String): BookResponse
         deleteBook(id: ID!): BookResponse
         addAuthor(name: String!, description: String!): AuthorResponse
@@ -18,13 +18,14 @@ const schema = buildSchema(`
     type Book {
         id: ID!
         title: String!
-        authors: [Author]!
         description: String!
+        authors: [Author]
     }
     type Author {
         id: ID!
         name: String!
         description: String!
+        books: [Book]
     }
     type Books {
         books: [Book]
